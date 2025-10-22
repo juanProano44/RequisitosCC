@@ -1,0 +1,3546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC:2022 - Tabla de Contenidos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .filter-group select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.95em;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-group select:hover {
+            border-color: #667eea;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            padding: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1em;
+            letter-spacing: 0.5px;
+        }
+
+        th:first-child {
+            width: 10%;
+        }
+
+        th:nth-child(2) {
+            width: 15%;
+        }
+
+        th:last-child {
+            width: 75%;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+            transform: scale(1.005);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        td {
+            padding: 12px 15px;
+            font-size: 0.95em;
+        }
+
+        .section-id {
+            font-weight: 600;
+            color: #2c3e50;
+            font-family: 'Courier New', monospace;
+        }
+
+        .component-id {
+            color: #667eea;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .component-id:empty::after {
+            content: "—";
+            color: #ccc;
+        }
+
+        .description {
+            color: #495057;
+            line-height: 1.6;
+        }
+
+        .level-0 { padding-left: 0; font-weight: 700; color: #2c3e50; }
+        .level-1 { padding-left: 15px; font-weight: 600; }
+        .level-2 { padding-left: 30px; }
+        .level-3 { padding-left: 45px; font-size: 0.9em; }
+
+        .class-row {
+            background: #79bff8;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        /* Mejorar contraste de texto en filas de clase */
+        .class-row td,
+        .class-row .section-id,
+        .class-row .component-id,
+        .class-row .description {
+            color: #ffffff;
+        }
+
+        .class-row:hover {
+            background: #79bff8 !important;
+        }
+
+        .stats {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 2px solid #e9ecef;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+
+        .highlight {
+            background: yellow;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 0.85em;
+            }
+
+            th:first-child, td:first-child {
+                width: 15%;
+            }
+
+            th:nth-child(2), td:nth-child(2) {
+                width: 20%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 CC:2022 Tabla de Contenidos</h1>
+            <p>Common Criteria for Information Technology Security Evaluation - Part 2</p>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar por identificador o descripción...">
+            </div>
+            <div class="filter-group">
+                <label for="classFilter">Clase:</label>
+                <select id="classFilter">
+                    <option value="">Todas las clases</option>
+                    <option value="FAU">FAU: Security audit</option>
+                    <option value="FCO">FCO: Communication</option>
+                    <option value="FCS">FCS: Cryptographic support</option>
+                    <option value="FDP">FDP: User data protection</option>
+                    <option value="FIA">FIA: Identification and authentication</option>
+                    <option value="FMT">FMT: Security management</option>
+                    <option value="FPR">FPR: Privacy</option>
+                    <option value="FPT">FPT: Protection of the TSF</option>
+                    <option value="FRU">FRU: Resource utilization</option>
+                    <option value="FTA">FTA: TOE access</option>
+                    <option value="FTP">FTP: Trusted path/channels</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="contentTable">
+                <thead>
+                    <tr>
+                        <th>Sección</th>
+                        <th>Identificador</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+    <tr class="class-row" data-class="FAU">
+        <td class="section-id">8</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FAU: Security audit</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.2</td>
+        <td class="component-id">FAU_ARP</td>
+        <td class="description level-1">Security audit automatic response </td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.2.3</td>
+        <td class="component-id">FAU_ARP.1</td>
+        <td class="description level-2">Management of FAU_ARP.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.2.4</td>
+        <td class="component-id">FAU_ARP.1</td>
+        <td class="description level-2">Audit of FAU_ARP.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.2.5</td>
+        <td class="component-id">FAU_ARP.1</td>
+        <td class="description level-2">Security alarms</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.3</td>
+        <td class="component-id">FAU_GEN</td>
+        <td class="description level-1">Security audit data generation </td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.3.3</td>
+        <td class="component-id">FAU_GEN.1, FAU_GEN.2</td>
+        <td class="description level-2">Management of FAU_GEN.1, FAU_GEN.2</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.3.4</td>
+        <td class="component-id">FAU_GEN.1, FAU_GEN.2</td>
+        <td class="description level-2">Audit of FAU_GEN.1, FAU_GEN.2</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.3.5</td>
+        <td class="component-id">FAU_GEN.1</td>
+        <td class="description level-2">Audit data generation</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.3.6</td>
+        <td class="component-id">FAU_GEN.2</td>
+        <td class="description level-2">User identity association</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4</td>
+        <td class="component-id">FAU_SAA</td>
+        <td class="description level-1">Security audit analysis </td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.3</td>
+        <td class="component-id">FAU_SAA.1</td>
+        <td class="description level-2">Management of FAU_SAA.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.4</td>
+        <td class="component-id">FAU_SAA.2</td>
+        <td class="description level-2">Management of FAU_SAA.2</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.5</td>
+        <td class="component-id">FAU_SAA.3</td>
+        <td class="description level-2">Management of FAU_SAA.3</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.6</td>
+        <td class="component-id">FAU_SAA.4</td>
+        <td class="description level-2">Management of FAU_SAA.4</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.7</td>
+        <td class="component-id">FAU_SAA.1, FAU_SAA.2, FAU_SAA.3, FAU_SAA.4</td>
+        <td class="description level-2">Audit of FAU_SAA.1, FAU_SAA.2, FAU_SAA.3, FAU_SAA.4</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.8</td>
+        <td class="component-id">FAU_SAA.1</td>
+        <td class="description level-2">Potential violation analysis</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.9</td>
+        <td class="component-id">FAU_SAA.2</td>
+        <td class="description level-2">Profile based anomaly detection</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.10</td>
+        <td class="component-id">FAU_SAA.3</td>
+        <td class="description level-2">Simple attack heuristics</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.4.11</td>
+        <td class="component-id">FAU_SAA.4</td>
+        <td class="description level-2">Complex attack heuristics</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5</td>
+        <td class="component-id">FAU_SAR</td>
+        <td class="description level-1">Security audit review </td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.3</td>
+        <td class="component-id">FAU_SAR.1</td>
+        <td class="description level-2">Management of FAU_SAR.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.4</td>
+        <td class="component-id">FAU_SAR.2, FAU_SAR.3</td>
+        <td class="description level-2">Management of FAU_SAR.2, FAU_SAR.3</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.5</td>
+        <td class="component-id">FAU_SAR.1</td>
+        <td class="description level-2">Audit of FAU_SAR.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.6</td>
+        <td class="component-id">FAU_SAR.2</td>
+        <td class="description level-2">Audit of FAU_SAR.2</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.7</td>
+        <td class="component-id">FAU_SAR.3</td>
+        <td class="description level-2">Audit of FAU_SAR.3</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.8</td>
+        <td class="component-id">FAU_SAR.1</td>
+        <td class="description level-2">Audit review</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.9</td>
+        <td class="component-id">FAU_SAR.2</td>
+        <td class="description level-2">Restricted audit review</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.5.10</td>
+        <td class="component-id">FAU_SAR.3</td>
+        <td class="description level-2">Selectable audit review</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.6</td>
+        <td class="component-id">FAU_SEL</td>
+        <td class="description level-1">Security audit event selection </td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.6.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.6.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.6.3</td>
+        <td class="component-id">FAU_SEL.1</td>
+        <td class="description level-2">Management of FAU_SEL.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.6.4</td>
+        <td class="component-id">FAU_SEL.1</td>
+        <td class="description level-2">Audit of FAU_SEL.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.6.5</td>
+        <td class="component-id">FAU_SEL.1</td>
+        <td class="description level-2">Selective audit</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7</td>
+        <td class="component-id">FAU_STG</td>
+        <td class="description level-1">Security audit data storage </td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.3</td>
+        <td class="component-id">FAU_STG.1</td>
+        <td class="description level-2">Management of FAU_STG.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.4</td>
+        <td class="component-id">FAU_STG.2</td>
+        <td class="description level-2">Management of FAU_STG.2</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.5</td>
+        <td class="component-id">FAU_STG.3</td>
+        <td class="description level-2">Management of FAU_STG.3</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.6</td>
+        <td class="component-id">FAU_STG.4</td>
+        <td class="description level-2">Management of FAU_STG.4</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.7</td>
+        <td class="component-id">FAU_STG.5</td>
+        <td class="description level-2">Management of FAU_STG.5</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.8</td>
+        <td class="component-id">FAU_STG.1</td>
+        <td class="description level-2">Audit of FAU_STG.1</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.9</td>
+        <td class="component-id">FAU_STG.2, FAU_STG.3</td>
+        <td class="description level-2">Audit of FAU_STG.2, FAU_STG.3</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.10</td>
+        <td class="component-id">FAU_STG.4</td>
+        <td class="description level-2">Audit of FAU_STG.4</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.11</td>
+        <td class="component-id">FAU_STG.5</td>
+        <td class="description level-2">Audit of FAU_STG.5</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.12</td>
+        <td class="component-id">FAU_STG.1</td>
+        <td class="description level-2">Audit data storage location</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.13</td>
+        <td class="component-id">FAU_STG.2</td>
+        <td class="description level-2">Protected audit data storage</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.14</td>
+        <td class="component-id">FAU_STG.3</td>
+        <td class="description level-2">Guarantees of audit data availability</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.15</td>
+        <td class="component-id">FAU_STG.4</td>
+        <td class="description level-2">Action in case of possible audit data loss</td>
+    </tr>
+    <tr data-class="FAU">
+        <td class="section-id">8.7.16</td>
+        <td class="component-id">FAU_STG.5</td>
+        <td class="description level-2">Prevention of audit data loss</td>
+    </tr>
+    <tr class="class-row" data-class="FCO">
+        <td class="section-id">9</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FCO: Communication</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.2</td>
+        <td class="component-id">FCO_NRO</td>
+        <td class="description level-1">Non-repudiation of origin </td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.2.3</td>
+        <td class="component-id">FCO_NRO.1, FCO_NRO.2</td>
+        <td class="description level-2">Management of FCO_NRO.1, FCO_NRO.2</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.2.4</td>
+        <td class="component-id">FCO_NRO.1</td>
+        <td class="description level-2">Audit of FCO_NRO.1</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.2.5</td>
+        <td class="component-id">FCO_NRO.2</td>
+        <td class="description level-2">Audit of FCO_NRO.2</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.2.6</td>
+        <td class="component-id">FCO_NRO.1</td>
+        <td class="description level-2">Selective proof of origin</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.2.7</td>
+        <td class="component-id">FCO_NRO.2</td>
+        <td class="description level-2">Enforced proof of origin</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.3</td>
+        <td class="component-id">FCO_NRR</td>
+        <td class="description level-1">Non-repudiation of receipt </td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.3.3</td>
+        <td class="component-id">FCO_NRR.1, FCO_NRR.2</td>
+        <td class="description level-2">Management of FCO_NRR.1, FCO_NRR.2</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.3.4</td>
+        <td class="component-id">FCO_NRR.1</td>
+        <td class="description level-2">Audit of FCO_NRR.1</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.3.5</td>
+        <td class="component-id">FCO_NRR.2</td>
+        <td class="description level-2">Audit of FCO_NRR.2</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.3.6</td>
+        <td class="component-id">FCO_NRR.1</td>
+        <td class="description level-2">Selective proof of receipt</td>
+    </tr>
+    <tr data-class="FCO">
+        <td class="section-id">9.3.7</td>
+        <td class="component-id">FCO_NRR.2</td>
+        <td class="description level-2">Enforced proof of receipt</td>
+    </tr>
+    <tr class="class-row" data-class="FCS">
+        <td class="section-id">10</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FCS: Cryptographic support</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2</td>
+        <td class="component-id">FCS_CKM</td>
+        <td class="description level-1">Cryptographic key management </td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.3</td>
+        <td class="component-id">FCS_CKM.1, FCS_CKM.2, FCS_CKM.3, FCS_CKM.5</td>
+        <td class="description level-2">Management of FCS_CKM.1, FCS_CKM.2, FCS_CKM.3, FCS_CKM.5, CKM.6</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.4</td>
+        <td class="component-id">FCS_CKM.1, FCS_CKM.2, FCS_CKM.3, FCS_CKM.5</td>
+        <td class="description level-2">Audit of FCS_CKM.1, FCS_CKM.2, FCS_CKM.3, FCS_CKM.5, CKM.6</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.5</td>
+        <td class="component-id">FCS_CKM.1</td>
+        <td class="description level-2">Cryptographic key generation</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.6</td>
+        <td class="component-id">FCS_CKM.2</td>
+        <td class="description level-2">Cryptographic key distribution</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.7</td>
+        <td class="component-id">FCS_CKM.3</td>
+        <td class="description level-2">Cryptographic key access</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.8</td>
+        <td class="component-id">FCS_CKM.4</td>
+        <td class="description level-2">Cryptographic key destruction</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.9</td>
+        <td class="component-id">FCS_CKM.5</td>
+        <td class="description level-2">Cryptographic key derivation</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.2.10</td>
+        <td class="component-id">FCS_CKM.6</td>
+        <td class="description level-2">Timing and event of cryptographic key destruction</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.3</td>
+        <td class="component-id">FCS_COP</td>
+        <td class="description level-1">Cryptographic operation </td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.3.3</td>
+        <td class="component-id">FCS_COP.1</td>
+        <td class="description level-2">Management of FCS_COP.1</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.3.4</td>
+        <td class="component-id">FCS_COP.1</td>
+        <td class="description level-2">Audit of FCS_COP.1</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.3.5</td>
+        <td class="component-id">FCS_COP.1</td>
+        <td class="description level-2">Cryptographic operation</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4</td>
+        <td class="component-id">FCS_RBG</td>
+        <td class="description level-1">Random bit generation </td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.3</td>
+        <td class="component-id">FCS_RBG.1, FCS_RBG.2, FCS_RBG.3, FCS_RBG.4, FCS_RBG.5, FCS_RBG.6</td>
+        <td class="description level-2">Management of FCS_RBG.1, FCS_RBG.2, FCS_RBG.3, FCS_RBG.4, FCS_RBG.5, FCS_RBG.6</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.4</td>
+        <td class="component-id">FCS_RBG.1, FCS_RBG.2</td>
+        <td class="description level-2">Audit of FCS_RBG.1, FCS_RBG.2</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.5</td>
+        <td class="component-id">FCS_RBG.3, FCS_RBG.4, FCS_RBG.5, FCS_RBG.6</td>
+        <td class="description level-2">Audit of FCS_RBG.3, FCS_RBG.4, FCS_RBG.5, FCS_RBG.6</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.6</td>
+        <td class="component-id">FCS_RBG.1</td>
+        <td class="description level-2">Random bit generation (RBG)</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.7</td>
+        <td class="component-id">FCS_RBG.2</td>
+        <td class="description level-2">Random bit generation (external seeding)</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.8</td>
+        <td class="component-id">FCS_RBG.3</td>
+        <td class="description level-2">Random bit generation (internal seeding – single source)</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.9</td>
+        <td class="component-id">FCS_RBG.4</td>
+        <td class="description level-2">Random bit generation (internal seeding – multiple sources)</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.10</td>
+        <td class="component-id">FCS_RBG.5</td>
+        <td class="description level-2">Random bit generation (combining noise sources)</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.4.11</td>
+        <td class="component-id">FCS_RBG.6</td>
+        <td class="description level-2">Random bit generation service</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.5</td>
+        <td class="component-id">FCS_RNG</td>
+        <td class="description level-1">Generation of random numbers </td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.5.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.5.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.5.3</td>
+        <td class="component-id">FCS_RNG.1</td>
+        <td class="description level-2">Management of FCS_RNG.1</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.5.4</td>
+        <td class="component-id">FCS_RNG.1</td>
+        <td class="description level-2">Audit of FCS_RNG.1</td>
+    </tr>
+    <tr data-class="FCS">
+        <td class="section-id">10.5.5</td>
+        <td class="component-id">FCS_RNG.1</td>
+        <td class="description level-2">Random number generation</td>
+    </tr>
+    <tr class="class-row" data-class="FDP">
+        <td class="section-id">11</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FDP: User data protection</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.2</td>
+        <td class="component-id">FDP_ACC</td>
+        <td class="description level-1">Access control policy </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.2.3</td>
+        <td class="component-id">FDP_ACC.1, FDP_ACC.2</td>
+        <td class="description level-2">Management of FDP_ACC.1, FDP_ACC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.2.4</td>
+        <td class="component-id">FDP_ACC.1, FDP_ACC.2</td>
+        <td class="description level-2">Audit of FDP_ACC.1, FDP_ACC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.2.5</td>
+        <td class="component-id">FDP_ACC.1</td>
+        <td class="description level-2">Subset access control</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.2.6</td>
+        <td class="component-id">FDP_ACC.2</td>
+        <td class="description level-2">Complete access control</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.3</td>
+        <td class="component-id">FDP_ACF</td>
+        <td class="description level-1">Access control functions </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.3.3</td>
+        <td class="component-id">FDP_ACF.1</td>
+        <td class="description level-2">Management of FDP_ACF.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.3.4</td>
+        <td class="component-id">FDP_ACF.1</td>
+        <td class="description level-2">Audit of FDP_ACF.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.3.5</td>
+        <td class="component-id">FDP_ACF.1</td>
+        <td class="description level-2">Security attribute-based access control</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.4</td>
+        <td class="component-id">FDP_DAU</td>
+        <td class="description level-1">Data authentication </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.4.3</td>
+        <td class="component-id">FDP_DAU.1, FDP_DAU.2</td>
+        <td class="description level-2">Management of FDP_DAU.1, FDP_DAU.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.4.4</td>
+        <td class="component-id">FDP_DAU.1</td>
+        <td class="description level-2">Audit of FDP_DAU.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.4.5</td>
+        <td class="component-id">FDP_DAU.2</td>
+        <td class="description level-2">Audit of FDP_DAU.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.4.6</td>
+        <td class="component-id">FDP_DAU.1</td>
+        <td class="description level-2">Basic Data Authentication</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.4.7</td>
+        <td class="component-id">FDP_DAU.2</td>
+        <td class="description level-2">Data Authentication with Identity of Guarantor</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.5</td>
+        <td class="component-id">FDP_ETC</td>
+        <td class="description level-1">Export from the TOE </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.5.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.5.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.5.3</td>
+        <td class="component-id">FDP_ETC.1</td>
+        <td class="description level-2">Management of FDP_ETC.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.5.4</td>
+        <td class="component-id">FDP_ETC.2</td>
+        <td class="description level-2">Management of FDP_ETC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.5.5</td>
+        <td class="component-id">FDP_ETC.1, FDP_ETC.2</td>
+        <td class="description level-2">Audit of FDP_ETC.1, FDP_ETC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.5.6</td>
+        <td class="component-id">FDP_ETC.1</td>
+        <td class="description level-2">Export of user data without security attributes</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.5.7</td>
+        <td class="component-id">FDP_ETC.2</td>
+        <td class="description level-2">Export of user data with security attributes</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.6</td>
+        <td class="component-id">FDP_IFC</td>
+        <td class="description level-1">Information flow control policy </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.6.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.6.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.6.3</td>
+        <td class="component-id">FDP_IFC.1, FDP_IFC.2</td>
+        <td class="description level-2">Management of FDP_IFC.1, FDP_IFC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.6.4</td>
+        <td class="component-id">FDP_IFC.1, FDP_IFC.2</td>
+        <td class="description level-2">Audit of FDP_IFC.1, FDP_IFC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.6.5</td>
+        <td class="component-id">FDP_IFC.1</td>
+        <td class="description level-2">Subset information flow control</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.6.6</td>
+        <td class="component-id">FDP_IFC.2</td>
+        <td class="description level-2">Complete information flow control</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7</td>
+        <td class="component-id">FDP_IFF</td>
+        <td class="description level-1">Information flow control functions </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.3</td>
+        <td class="component-id">FDP_IFF.1, FDP_IFF.2</td>
+        <td class="description level-2">Management of FDP_IFF.1, FDP_IFF.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.4</td>
+        <td class="component-id">FDP_IFF.3, FDP_IFF.4, FDP_IFF.5</td>
+        <td class="description level-2">Management of FDP_IFF.3, FDP_IFF.4, FDP_IFF.5</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.5</td>
+        <td class="component-id">FDP_IFF.6</td>
+        <td class="description level-2">Management of FDP_IFF.6</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.6</td>
+        <td class="component-id">FDP_IFF.1, FDP_IFF.2, FDP_IFF.5</td>
+        <td class="description level-2">Audit of FDP_IFF.1, FDP_IFF.2, FDP_IFF.5</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.7</td>
+        <td class="component-id">FDP_IFF.3, FDP_IFF.4, FDP_IFF.6</td>
+        <td class="description level-2">Audit of FDP_IFF.3, FDP_IFF.4, FDP_IFF.6</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.8</td>
+        <td class="component-id">FDP_IFF.1</td>
+        <td class="description level-2">Simple security attributes</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.9</td>
+        <td class="component-id">FDP_IFF.2</td>
+        <td class="description level-2">Hierarchical security attributes</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.10</td>
+        <td class="component-id">FDP_IFF.3</td>
+        <td class="description level-2">Limited illicit information flows</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.11</td>
+        <td class="component-id">FDP_IFF.4</td>
+        <td class="description level-2">Partial elimination of illicit information flows</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.12</td>
+        <td class="component-id">FDP_IFF.5</td>
+        <td class="description level-2">No illicit information flows</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.7.13</td>
+        <td class="component-id">FDP_IFF.6</td>
+        <td class="description level-2">Illicit information flow monitoring</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.8</td>
+        <td class="component-id">FDP_IRC</td>
+        <td class="description level-1">Information Retention Control </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.8.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.8.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.8.3</td>
+        <td class="component-id">FDP_IRC.1</td>
+        <td class="description level-2">Management of FDP_IRC.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.8.4</td>
+        <td class="component-id">FDP_IRC.1</td>
+        <td class="description level-2">Audit of FDP_IRC.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.8.5</td>
+        <td class="component-id">FDP_IRC.1</td>
+        <td class="description level-2">Information retention control</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.9</td>
+        <td class="component-id">FDP_ITC</td>
+        <td class="description level-1">Import from outside of the TOE </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.9.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.9.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.9.3</td>
+        <td class="component-id">FDP_ITC.1, FDP_ITC.2</td>
+        <td class="description level-2">Management of FDP_ITC.1, FDP_ITC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.9.4</td>
+        <td class="component-id">FDP_ITC.1, FDP_ITC.2</td>
+        <td class="description level-2">Audit of FDP_ITC.1, FDP_ITC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.9.5</td>
+        <td class="component-id">FDP_ITC.1</td>
+        <td class="description level-2">Import of user data without security attributes</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.9.6</td>
+        <td class="component-id">FDP_ITC.2</td>
+        <td class="description level-2">Import of user data with security attributes</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10</td>
+        <td class="component-id">FDP_ITT</td>
+        <td class="description level-1">Internal TOE transfer </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.3</td>
+        <td class="component-id">FDP_ITT.1, FDP_ITT.2</td>
+        <td class="description level-2">Management of FDP_ITT.1, FDP_ITT.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.4</td>
+        <td class="component-id">FDP_ITT.3, FDP_ITT.4</td>
+        <td class="description level-2">Management of FDP_ITT.3, FDP_ITT.4</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.5</td>
+        <td class="component-id">FDP_ITT.1, FDP_ITT.2</td>
+        <td class="description level-2">Audit of FDP_ITT.1, FDP_ITT.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.6</td>
+        <td class="component-id">FDP_ITT.3, FDP_ITT.4</td>
+        <td class="description level-2">Audit of FDP_ITT.3, FDP_ITT.4</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.7</td>
+        <td class="component-id">FDP_ITT.1</td>
+        <td class="description level-2">Basic internal transfer protection</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.8</td>
+        <td class="component-id">FDP_ITT.2</td>
+        <td class="description level-2">Transmission separation by attribute</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.9</td>
+        <td class="component-id">FDP_ITT.3</td>
+        <td class="description level-2">Integrity monitoring</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.10.10</td>
+        <td class="component-id">FDP_ITT.4</td>
+        <td class="description level-2">Attribute-based integrity monitoring</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.11</td>
+        <td class="component-id">FDP_RIP</td>
+        <td class="description level-1">Residual information protection </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.11.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.11.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.11.3</td>
+        <td class="component-id">FDP_RIP.1, FDP_RIP.2</td>
+        <td class="description level-2">Management of FDP_RIP.1, FDP_RIP.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.11.4</td>
+        <td class="component-id">FDP_RIP.1, FDP_RIP.2</td>
+        <td class="description level-2">Audit of FDP_RIP.1, FDP_RIP.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.11.5</td>
+        <td class="component-id">FDP_RIP.1</td>
+        <td class="description level-2">Subset residual information protection</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.11.6</td>
+        <td class="component-id">FDP_RIP.2</td>
+        <td class="description level-2">Full residual information protection</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.12</td>
+        <td class="component-id">FDP_ROL</td>
+        <td class="description level-1">Rollback </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.12.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.12.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.12.3</td>
+        <td class="component-id">FDP_ROL.1, FDP_ROL.2</td>
+        <td class="description level-2">Management of FDP_ROL.1, FDP_ROL.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.12.4</td>
+        <td class="component-id">FDP_ROL.1, FDP_ROL.2</td>
+        <td class="description level-2">Audit of FDP_ROL.1, FDP_ROL.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.12.5</td>
+        <td class="component-id">FDP_ROL.1</td>
+        <td class="description level-2">Basic rollback</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.12.6</td>
+        <td class="component-id">FDP_ROL.2</td>
+        <td class="description level-2">Advanced rollback</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.13</td>
+        <td class="component-id">FDP_SDC</td>
+        <td class="description level-1">Stored data confidentiality </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.13.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.13.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.13.3</td>
+        <td class="component-id">FDP_SDC.1, FDP_SDC.2</td>
+        <td class="description level-2">Management of FDP_SDC.1, FDP_SDC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.13.4</td>
+        <td class="component-id">FDP_SDC.1, FDP_SDC.2</td>
+        <td class="description level-2">Audit of FDP_SDC.1, FDP_SDC.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.13.5</td>
+        <td class="component-id">FDP_SDC.1</td>
+        <td class="description level-2">Stored data confidentiality</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.13.6</td>
+        <td class="component-id">FDP_SDC.2</td>
+        <td class="description level-2">Stored data confidentiality with dedicated method</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14</td>
+        <td class="component-id">FDP_SDI</td>
+        <td class="description level-1">Stored data integrity </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14.3</td>
+        <td class="component-id">FDP_SDI.1</td>
+        <td class="description level-2">Management of FDP_SDI.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14.4</td>
+        <td class="component-id">FDP_SDI.2</td>
+        <td class="description level-2">Management of FDP_SDI.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14.5</td>
+        <td class="component-id">FDP_SDI.1</td>
+        <td class="description level-2">Audit of FDP_SDI.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14.6</td>
+        <td class="component-id">FDP_SDI.2</td>
+        <td class="description level-2">Audit of FDP_SDI.2</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14.7</td>
+        <td class="component-id">FDP_SDI.1</td>
+        <td class="description level-2">Stored data integrity monitoring</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.14.8</td>
+        <td class="component-id">FDP_SDI.2</td>
+        <td class="description level-2">Stored data integrity monitoring and action</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.15</td>
+        <td class="component-id">FDP_UCT</td>
+        <td class="description level-1">Inter-TSF user data confidentiality transfer protection </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.15.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.15.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.15.3</td>
+        <td class="component-id">FDP_UCT.1</td>
+        <td class="description level-2">Management of FDP_UCT.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.15.4</td>
+        <td class="component-id">FDP_UCT.1</td>
+        <td class="description level-2">Audit of FDP_UCT.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.15.5</td>
+        <td class="component-id">FDP_UCT.1</td>
+        <td class="description level-2">Basic data exchange confidentiality</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16</td>
+        <td class="component-id">FDP_UIT</td>
+        <td class="description level-1">Inter-TSF user data integrity transfer protection </td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16.3</td>
+        <td class="component-id">FDP_UIT.1, FDP_UIT.2, FDP_UIT.3</td>
+        <td class="description level-2">Management of FDP_UIT.1, FDP_UIT.2, FDP_UIT.3</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16.4</td>
+        <td class="component-id">FDP_UIT.1</td>
+        <td class="description level-2">Audit of FDP_UIT.1</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16.5</td>
+        <td class="component-id">FDP_UIT.2, FDP_UIT.3</td>
+        <td class="description level-2">Audit of FDP_UIT.2, FDP_UIT.3</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16.6</td>
+        <td class="component-id">FDP_UIT.1</td>
+        <td class="description level-2">Data exchange integrity</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16.7</td>
+        <td class="component-id">FDP_UIT.2</td>
+        <td class="description level-2">Source data exchange recovery</td>
+    </tr>
+    <tr data-class="FDP">
+        <td class="section-id">11.16.8</td>
+        <td class="component-id">FDP_UIT.3</td>
+        <td class="description level-2">Destination data exchange recovery</td>
+    </tr>
+    <tr class="class-row" data-class="FIA">
+        <td class="section-id">12</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FIA: Identification and authentication</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.2</td>
+        <td class="component-id">FIA_AFL</td>
+        <td class="description level-1">Authentication failures </td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.2.3</td>
+        <td class="component-id">FIA_AFL.1</td>
+        <td class="description level-2">Management of FIA_AFL.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.2.4</td>
+        <td class="component-id">FIA_AFL.1</td>
+        <td class="description level-2">Audit of FIA_AFL.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.2.5</td>
+        <td class="component-id">FIA_AFL.1</td>
+        <td class="description level-2">Authentication failure handling</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.3</td>
+        <td class="component-id">FIA_API</td>
+        <td class="description level-1">Authentication proof of identity </td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.3.3</td>
+        <td class="component-id">FIA_API.1</td>
+        <td class="description level-2">Management of FIA_API.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.3.4</td>
+        <td class="component-id">FIA_API.1</td>
+        <td class="description level-2">Audit of FIA_API.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.3.5</td>
+        <td class="component-id">FIA_API.1</td>
+        <td class="description level-2">Authentication proof of identity</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.4</td>
+        <td class="component-id">FIA_ATD</td>
+        <td class="description level-1">User attribute definition </td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.4.3</td>
+        <td class="component-id">FIA_ATD.1</td>
+        <td class="description level-2">Management of FIA_ATD.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.4.4</td>
+        <td class="component-id">FIA_ATD.1</td>
+        <td class="description level-2">Audit of FIA_ATD.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.4.5</td>
+        <td class="component-id">FIA_ATD.1</td>
+        <td class="description level-2">User attribute definition</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.5</td>
+        <td class="component-id">FIA_SOS</td>
+        <td class="description level-1">Specification of secrets </td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.5.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.5.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.5.3</td>
+        <td class="component-id">FIA_SOS.1</td>
+        <td class="description level-2">Management of FIA_SOS.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.5.4</td>
+        <td class="component-id">FIA_SOS.2</td>
+        <td class="description level-2">Management of FIA_SOS.2</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.5.5</td>
+        <td class="component-id">FIA_SOS.1, FIA_SOS.2</td>
+        <td class="description level-2">Audit of FIA_SOS.1, FIA_SOS.2</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.5.6</td>
+        <td class="component-id">FIA_SOS.1</td>
+        <td class="description level-2">Verification of secrets</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.5.7</td>
+        <td class="component-id">FIA_SOS.2</td>
+        <td class="description level-2">TSF Generation of secrets</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6</td>
+        <td class="component-id">FIA_UAU</td>
+        <td class="description level-1">User authentication </td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.3</td>
+        <td class="component-id">FIA_UAU.1</td>
+        <td class="description level-2">Management of FIA_UAU.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.4</td>
+        <td class="component-id">FIA_UAU.2</td>
+        <td class="description level-2">Management of FIA_UAU.2</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.5</td>
+        <td class="component-id">FIA_UAU.3, FIA_UAU.4, FIA_UAU.7</td>
+        <td class="description level-2">Management of FIA_UAU.3, FIA_UAU.4, FIA_UAU.7</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.6</td>
+        <td class="component-id">FIA_UAU.5</td>
+        <td class="description level-2">Management of FIA_UAU.5</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.7</td>
+        <td class="component-id">FIA_UAU.6</td>
+        <td class="description level-2">Management of FIA_UAU.6</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.8</td>
+        <td class="component-id">FIA_UAU.7</td>
+        <td class="description level-2">Management of FIA_UAU.7</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.9</td>
+        <td class="component-id">FIA_UAU.1</td>
+        <td class="description level-2">Audit of FIA_UAU.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.10</td>
+        <td class="component-id">FIA_UAU.2</td>
+        <td class="description level-2">Audit of FIA_UAU.2</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.11</td>
+        <td class="component-id">FIA_UAU.3</td>
+        <td class="description level-2">Audit of FIA_UAU.3</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.12</td>
+        <td class="component-id">FIA_UAU.4</td>
+        <td class="description level-2">Audit of FIA_UAU.4</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.13</td>
+        <td class="component-id">FIA_UAU.5</td>
+        <td class="description level-2">Audit of FIA_UAU.5</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.14</td>
+        <td class="component-id">FIA_UAU.6</td>
+        <td class="description level-2">Audit of FIA_UAU.6</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.15</td>
+        <td class="component-id">FIA_UAU.7</td>
+        <td class="description level-2">Audit of FIA_UAU.7</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.16</td>
+        <td class="component-id">FIA_UAU.1</td>
+        <td class="description level-2">Timing of authentication</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.17</td>
+        <td class="component-id">FIA_UAU.2</td>
+        <td class="description level-2">User authentication before any action</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.18</td>
+        <td class="component-id">FIA_UAU.3</td>
+        <td class="description level-2">Unforgeable authentication</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.19</td>
+        <td class="component-id">FIA_UAU.4</td>
+        <td class="description level-2">Single-use authentication mechanisms</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.20</td>
+        <td class="component-id">FIA_UAU.5</td>
+        <td class="description level-2">Multiple authentication mechanisms</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.21</td>
+        <td class="component-id">FIA_UAU.6</td>
+        <td class="description level-2">Re-authenticating</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.6.22</td>
+        <td class="component-id">FIA_UAU.7</td>
+        <td class="description level-2">Protected authentication feedback</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.7</td>
+        <td class="component-id">FIA_UID</td>
+        <td class="description level-1">User identification </td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.7.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.7.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.7.3</td>
+        <td class="component-id">FIA_UID.1</td>
+        <td class="description level-2">Management of FIA_UID.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.7.4</td>
+        <td class="component-id">FIA_UID.2</td>
+        <td class="description level-2">Management of FIA_UID.2</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.7.5</td>
+        <td class="component-id">FIA_UID.1, FIA_UID.2</td>
+        <td class="description level-2">Audit of FIA_UID.1, FIA_UID.2</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.7.6</td>
+        <td class="component-id">FIA_UID.1</td>
+        <td class="description level-2">Timing of identification</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.7.7</td>
+        <td class="component-id">FIA_UID.2</td>
+        <td class="description level-2">User identification before any action</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.8</td>
+        <td class="component-id">FIA_USB</td>
+        <td class="description level-1">User-subject binding </td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.8.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.8.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.8.3</td>
+        <td class="component-id">FIA_USB.1</td>
+        <td class="description level-2">Management of FIA_USB.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.8.4</td>
+        <td class="component-id">FIA_USB.1</td>
+        <td class="description level-2">Audit of FIA_USB.1</td>
+    </tr>
+    <tr data-class="FIA">
+        <td class="section-id">12.8.5</td>
+        <td class="component-id">FIA_USB.1</td>
+        <td class="description level-2">User-subject binding</td>
+    </tr>
+    <tr class="class-row" data-class="FMT">
+        <td class="section-id">13</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FMT: Security management</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.2</td>
+        <td class="component-id">FMT_LIM</td>
+        <td class="description level-1">Limited capabilities and availability </td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.2.3</td>
+        <td class="component-id">FMT_LIM.1, FMT_LIM.2</td>
+        <td class="description level-2">Management of FMT_LIM.1, FMT_LIM.2</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.2.4</td>
+        <td class="component-id">FMT_LIM.1</td>
+        <td class="description level-2">Audit of FMT_LIM.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.2.5</td>
+        <td class="component-id">FMT_LIM.1</td>
+        <td class="description level-2">Limited capabilities</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.2.6</td>
+        <td class="component-id">FMT_LIM.2</td>
+        <td class="description level-2">Limited availability</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.3</td>
+        <td class="component-id">FMT_MOF</td>
+        <td class="description level-1">Management of functions in TSF </td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.3.3</td>
+        <td class="component-id">FMT_MOF.1</td>
+        <td class="description level-2">Management of FMT_MOF.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.3.4</td>
+        <td class="component-id">FMT_MOF.1</td>
+        <td class="description level-2">Audit of FMT_MOF.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.3.5</td>
+        <td class="component-id">FMT_MOF.1</td>
+        <td class="description level-2">Management of security functions behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4</td>
+        <td class="component-id">FMT_MSA</td>
+        <td class="description level-1">Management of security attributes </td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.3</td>
+        <td class="component-id">FMT_MSA.1</td>
+        <td class="description level-2">Management of FMT_MSA.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.4</td>
+        <td class="component-id">FMT_MSA.2</td>
+        <td class="description level-2">Management of FMT_MSA.2</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.5</td>
+        <td class="component-id">FMT_MSA.3</td>
+        <td class="description level-2">Management of FMT_MSA.3</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.6</td>
+        <td class="component-id">FMT_MSA.4</td>
+        <td class="description level-2">Management of FMT_MSA.4</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.7</td>
+        <td class="component-id">FMT_MSA.1</td>
+        <td class="description level-2">Audit of FMT_MSA.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.8</td>
+        <td class="component-id">FMT_MSA.2</td>
+        <td class="description level-2">Audit of FMT_MSA.2</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.9</td>
+        <td class="component-id">FMT_MSA.3</td>
+        <td class="description level-2">Audit of FMT_MSA.3</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.10</td>
+        <td class="component-id">FMT_MSA.4</td>
+        <td class="description level-2">Audit of FMT_MSA.4</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.11</td>
+        <td class="component-id">FMT_MSA.1</td>
+        <td class="description level-2">Management of security attributes</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.12</td>
+        <td class="component-id">FMT_MSA.2</td>
+        <td class="description level-2">Secure security attributes</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.13</td>
+        <td class="component-id">FMT_MSA.3</td>
+        <td class="description level-2">Static attribute initialization</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.4.14</td>
+        <td class="component-id">FMT_MSA.4</td>
+        <td class="description level-2">Security attribute value inheritance</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5</td>
+        <td class="component-id">FMT_MTD</td>
+        <td class="description level-1">Management of TSF data </td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.3</td>
+        <td class="component-id">FMT_MTD.1</td>
+        <td class="description level-2">Management of FMT_MTD.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.4</td>
+        <td class="component-id">FMT_MTD.2</td>
+        <td class="description level-2">Management of FMT_MTD.2</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.5</td>
+        <td class="component-id">FMT_MTD.3</td>
+        <td class="description level-2">Management of FMT_MTD.3</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.6</td>
+        <td class="component-id">FMT_MTD.1</td>
+        <td class="description level-2">Audit of FMT_MTD.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.7</td>
+        <td class="component-id">FMT_MTD.2</td>
+        <td class="description level-2">Audit of FMT_MTD.2</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.8</td>
+        <td class="component-id">FMT_MTD.3</td>
+        <td class="description level-2">Audit of FMT_MTD.3</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.9</td>
+        <td class="component-id">FMT_MTD.1</td>
+        <td class="description level-2">Management of TSF data</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.10</td>
+        <td class="component-id">FMT_MTD.2</td>
+        <td class="description level-2">Management of limits on TSF data</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.5.11</td>
+        <td class="component-id">FMT_MTD.3</td>
+        <td class="description level-2">Secure TSF data</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.6</td>
+        <td class="component-id">FMT_REV</td>
+        <td class="description level-1">Revocation </td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.6.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.6.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.6.3</td>
+        <td class="component-id">FMT_REV.1</td>
+        <td class="description level-2">Management of FMT_REV.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.6.4</td>
+        <td class="component-id">FMT_REV.1</td>
+        <td class="description level-2">Audit of FMT_REV.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.6.5</td>
+        <td class="component-id">FMT_REV.1</td>
+        <td class="description level-2">Revocation</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.7</td>
+        <td class="component-id">FMT_SAE</td>
+        <td class="description level-1">Security attribute expiration </td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.7.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.7.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.7.3</td>
+        <td class="component-id">FMT_SAE.1</td>
+        <td class="description level-2">Management of FMT_SAE.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.7.4</td>
+        <td class="component-id">FMT_SAE.1</td>
+        <td class="description level-2">Audit of FMT_SAE.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.7.5</td>
+        <td class="component-id">FMT_SAE.1</td>
+        <td class="description level-2">Time-limited authorization</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.8</td>
+        <td class="component-id">FMT_SMF</td>
+        <td class="description level-1">Specification of Management Functions </td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.8.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.8.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.8.3</td>
+        <td class="component-id">FMT_SMF.1</td>
+        <td class="description level-2">Management of FMT_SMF.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.8.4</td>
+        <td class="component-id">FMT_SMF.1</td>
+        <td class="description level-2">Audit of FMT_SMF.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.8.5</td>
+        <td class="component-id">FMT_SMF.1</td>
+        <td class="description level-2">Specification of Management Functions</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9</td>
+        <td class="component-id">FMT_SMR</td>
+        <td class="description level-1">Security management roles </td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.3</td>
+        <td class="component-id">FMT_SMR.1</td>
+        <td class="description level-2">Management of FMT_SMR.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.4</td>
+        <td class="component-id">FMT_SMR.2</td>
+        <td class="description level-2">Management of FMT_SMR.2</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.5</td>
+        <td class="component-id">FMT_SMR.3</td>
+        <td class="description level-2">Management of FMT_SMR.3</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.6</td>
+        <td class="component-id">FMT_SMR.1</td>
+        <td class="description level-2">Audit of FMT_SMR.1</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.7</td>
+        <td class="component-id">FMT_SMR.2</td>
+        <td class="description level-2">Audit of FMT_SMR.2</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.8</td>
+        <td class="component-id">FMT_SMR.3</td>
+        <td class="description level-2">Audit of FMT_SMR.3</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.9</td>
+        <td class="component-id">FMT_SMR.1</td>
+        <td class="description level-2">Security roles</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.10</td>
+        <td class="component-id">FMT_SMR.2</td>
+        <td class="description level-2">Restrictions on security roles</td>
+    </tr>
+    <tr data-class="FMT">
+        <td class="section-id">13.9.11</td>
+        <td class="component-id">FMT_SMR.3</td>
+        <td class="description level-2">Assuming roles</td>
+    </tr>
+    <tr class="class-row" data-class="FPR">
+        <td class="section-id">14</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FPR: Privacy</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.2</td>
+        <td class="component-id">FPR_ANO</td>
+        <td class="description level-1">Anonymity </td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.2.3</td>
+        <td class="component-id">FPR_ANO.1, FPR_ANO.2</td>
+        <td class="description level-2">Management of FPR_ANO.1, FPR_ANO.2</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.2.4</td>
+        <td class="component-id">FPR_ANO.1, FPR_ANO.2</td>
+        <td class="description level-2">Audit of FPR_ANO.1, FPR_ANO.2</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.2.5</td>
+        <td class="component-id">FPR_ANO.1</td>
+        <td class="description level-2">Anonymity</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.2.6</td>
+        <td class="component-id">FPR_ANO.2</td>
+        <td class="description level-2">Anonymity without soliciting information</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.3</td>
+        <td class="component-id">FPR_PSE</td>
+        <td class="description level-1">Pseudonymity </td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.3.3</td>
+        <td class="component-id">FPR_PSE.1, FPR_PSE.2, FPR_PSE.3</td>
+        <td class="description level-2">Management of FPR_PSE.1, FPR_PSE.2, FPR_PSE.3</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.3.4</td>
+        <td class="component-id">FPR_PSE.1, FPR_PSE.2, FPR_PSE.3</td>
+        <td class="description level-2">Audit of FPR_PSE.1, FPR_PSE.2, FPR_PSE.3</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.3.5</td>
+        <td class="component-id">FPR_PSE.1</td>
+        <td class="description level-2">Pseudonymity</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.3.6</td>
+        <td class="component-id">FPR_PSE.2</td>
+        <td class="description level-2">Reversible pseudonymity</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.3.7</td>
+        <td class="component-id">FPR_PSE.3</td>
+        <td class="description level-2">Alias pseudonymity</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.4</td>
+        <td class="component-id">FPR_UNL</td>
+        <td class="description level-1">Unlinkability </td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.4.3</td>
+        <td class="component-id">FPR_UNL.1</td>
+        <td class="description level-2">Management of FPR_UNL.1</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.4.4</td>
+        <td class="component-id">FPR_UNL.1</td>
+        <td class="description level-2">Audit of FPR_UNL.1</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.4.5</td>
+        <td class="component-id">FPR_UNL.1</td>
+        <td class="description level-2">Unlinkability of operations</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5</td>
+        <td class="component-id">FPR_UNO</td>
+        <td class="description level-1">Unobservability </td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.3</td>
+        <td class="component-id">FPR_UNO.1, FPR_UNO.2</td>
+        <td class="description level-2">Management of FPR_UNO.1, FPR_UNO.2</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.4</td>
+        <td class="component-id">FPR_UNO.3</td>
+        <td class="description level-2">Management of FPR_UNO.3</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.5</td>
+        <td class="component-id">FPR_UNO.4</td>
+        <td class="description level-2">Management of FPR_UNO.4</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.6</td>
+        <td class="component-id">FPR_UNO.1, FPR_UNO.2</td>
+        <td class="description level-2">Audit of FPR_UNO.1, FPR_UNO.2</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.7</td>
+        <td class="component-id">FPR_UNO.3</td>
+        <td class="description level-2">Audit of FPR_UNO.3</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.8</td>
+        <td class="component-id">FPR_UNO.4</td>
+        <td class="description level-2">Audit of FPR_UNO.4</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.9</td>
+        <td class="component-id">FPR_UNO.1</td>
+        <td class="description level-2">Unobservability</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.10</td>
+        <td class="component-id">FPR_UNO.2</td>
+        <td class="description level-2">Allocation of information impacting unobservability</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.11</td>
+        <td class="component-id">FPR_UNO.3</td>
+        <td class="description level-2">Unobservability without soliciting information</td>
+    </tr>
+    <tr data-class="FPR">
+        <td class="section-id">14.5.12</td>
+        <td class="component-id">FPR_UNO.4</td>
+        <td class="description level-2">Authorized user observability</td>
+    </tr>
+    <tr class="class-row" data-class="FPT">
+        <td class="section-id">15</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FPT: Protection of the TSF</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.2</td>
+        <td class="component-id">FPT_EMS</td>
+        <td class="description level-1">TOE emanation </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.2.3</td>
+        <td class="component-id">FPT_EMS.1</td>
+        <td class="description level-2">Management of FPT_EMS.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.2.4</td>
+        <td class="component-id">FPT_EMS.1</td>
+        <td class="description level-2">Audit of FPT_EMS.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.2.5</td>
+        <td class="component-id">FPT_EMS.1</td>
+        <td class="description level-2">Emanation of TSF and User data</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.3</td>
+        <td class="component-id">FPT_FLS</td>
+        <td class="description level-1">Fail secure </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.3.3</td>
+        <td class="component-id">FPT_FLS.1</td>
+        <td class="description level-2">Management of FPT_FLS.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.3.4</td>
+        <td class="component-id">FPT_FLS.1</td>
+        <td class="description level-2">Audit of FPT_FLS.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.3.5</td>
+        <td class="component-id">FPT_FLS.1</td>
+        <td class="description level-2">Failure with preservation of secure state</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.4</td>
+        <td class="component-id">FPT_INI</td>
+        <td class="description level-1">TSF initialization </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.4.3</td>
+        <td class="component-id">FPT_INI.1</td>
+        <td class="description level-2">Management of FPT_INI.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.4.4</td>
+        <td class="component-id">FPT_INI.1</td>
+        <td class="description level-2">Audit of FPT_INI.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.4.5</td>
+        <td class="component-id">FPT_INI.1</td>
+        <td class="description level-2">TSF initialization</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.5</td>
+        <td class="component-id">FPT_ITA</td>
+        <td class="description level-1">Availability of exported TSF data </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.5.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.5.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.5.3</td>
+        <td class="component-id">FPT_ITA.1</td>
+        <td class="description level-2">Management of FPT_ITA.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.5.4</td>
+        <td class="component-id">FPT_ITA.1</td>
+        <td class="description level-2">Audit of FPT_ITA.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.5.5</td>
+        <td class="component-id">FPT_ITA.1</td>
+        <td class="description level-2">Inter-TSF availability within a defined availability metric</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.6</td>
+        <td class="component-id">FPT_ITC</td>
+        <td class="description level-1">Confidentiality of exported TSF data </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.6.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.6.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.6.3</td>
+        <td class="component-id">FPT_ITC.1</td>
+        <td class="description level-2">Management of FPT_ITC.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.6.4</td>
+        <td class="component-id">FPT_ITC.1</td>
+        <td class="description level-2">Audit of FPT_ITC.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.6.5</td>
+        <td class="component-id">FPT_ITC.1</td>
+        <td class="description level-2">Inter-TSF confidentiality during transmission</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7</td>
+        <td class="component-id">FPT_ITI</td>
+        <td class="description level-1">Integrity of exported TSF data </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7.3</td>
+        <td class="component-id">FPT_ITI.1</td>
+        <td class="description level-2">Management of FPT_ITI.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7.4</td>
+        <td class="component-id">FPT_ITI.2</td>
+        <td class="description level-2">Management of FPT_ITI.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7.5</td>
+        <td class="component-id">FPT_ITI.1</td>
+        <td class="description level-2">Audit of FPT_ITI.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7.6</td>
+        <td class="component-id">FPT_ITI.2</td>
+        <td class="description level-2">Audit of FPT_ITI.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7.7</td>
+        <td class="component-id">FPT_ITI.1</td>
+        <td class="description level-2">Inter-TSF detection of modification</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.7.8</td>
+        <td class="component-id">FPT_ITI.2</td>
+        <td class="description level-2">Inter-TSF detection and correction of modification</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8</td>
+        <td class="component-id">FPT_ITT</td>
+        <td class="description level-1">Internal TOE TSF data transfer </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.3</td>
+        <td class="component-id">FPT_ITT.1</td>
+        <td class="description level-2">Management of FPT_ITT.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.4</td>
+        <td class="component-id">FPT_ITT.2</td>
+        <td class="description level-2">Management of FPT_ITT.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.5</td>
+        <td class="component-id">FPT_ITT.3</td>
+        <td class="description level-2">Management of FPT_ITT.3</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.6</td>
+        <td class="component-id">FPT_ITT.1, FPT_ITT.2</td>
+        <td class="description level-2">Audit of FPT_ITT.1, FPT_ITT.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.7</td>
+        <td class="component-id">FPT_ITT.3</td>
+        <td class="description level-2">Audit of FPT_ITT.3</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.8</td>
+        <td class="component-id">FPT_ITT.1</td>
+        <td class="description level-2">Basic internal TSF data transfer protection</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.9</td>
+        <td class="component-id">FPT_ITT.2</td>
+        <td class="description level-2">TSF data transfer separation</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.8.10</td>
+        <td class="component-id">FPT_ITT.3</td>
+        <td class="description level-2">TSF data integrity monitoring</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9</td>
+        <td class="component-id">FPT_PHP</td>
+        <td class="description level-1">TSF physical protection </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.3</td>
+        <td class="component-id">FPT_PHP.1</td>
+        <td class="description level-2">Management of FPT_PHP.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.4</td>
+        <td class="component-id">FPT_PHP.2</td>
+        <td class="description level-2">Management of FPT_PHP.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.5</td>
+        <td class="component-id">FPT_PHP.3</td>
+        <td class="description level-2">Management of FPT_PHP.3</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.6</td>
+        <td class="component-id">FPT_PHP.1</td>
+        <td class="description level-2">Audit of FPT_PHP.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.7</td>
+        <td class="component-id">FPT_PHP.2</td>
+        <td class="description level-2">Audit of FPT_PHP.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.8</td>
+        <td class="component-id">FPT_PHP.3</td>
+        <td class="description level-2">Audit of FPT_PHP.3</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.9</td>
+        <td class="component-id">FPT_PHP.1</td>
+        <td class="description level-2">Passive detection of physical attack</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.10</td>
+        <td class="component-id">FPT_PHP.2</td>
+        <td class="description level-2">Notification of physical attack</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.9.11</td>
+        <td class="component-id">FPT_PHP.3</td>
+        <td class="description level-2">Resistance to physical attack</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10</td>
+        <td class="component-id">FPT_RCV</td>
+        <td class="description level-1">Trusted recovery </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.3</td>
+        <td class="component-id">FPT_RCV.1</td>
+        <td class="description level-2">Management of FPT_RCV.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.4</td>
+        <td class="component-id">FPT_RCV.2, FPT_RCV.3</td>
+        <td class="description level-2">Management of FPT_RCV.2, FPT_RCV.3</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.5</td>
+        <td class="component-id">FPT_RCV.4</td>
+        <td class="description level-2">Management of FPT_RCV.4</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.6</td>
+        <td class="component-id">FPT_RCV.1, FPT_RCV.2, FPT_RCV.3</td>
+        <td class="description level-2">Audit of FPT_RCV.1, FPT_RCV.2, FPT_RCV.3</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.7</td>
+        <td class="component-id">FPT_RCV.4</td>
+        <td class="description level-2">Audit of FPT_RCV.4</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.8</td>
+        <td class="component-id">FPT_RCV.1</td>
+        <td class="description level-2">Manual recovery</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.9</td>
+        <td class="component-id">FPT_RCV.2</td>
+        <td class="description level-2">Automated recovery</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.10</td>
+        <td class="component-id">FPT_RCV.3</td>
+        <td class="description level-2">Automated recovery without undue loss</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.10.11</td>
+        <td class="component-id">FPT_RCV.4</td>
+        <td class="description level-2">Function recovery</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.11</td>
+        <td class="component-id">FPT_RPL</td>
+        <td class="description level-1">Replay detection </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.11.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.11.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.11.3</td>
+        <td class="component-id">FPT_RPL.1</td>
+        <td class="description level-2">Management of FPT_RPL.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.11.4</td>
+        <td class="component-id">FPT_RPL.1</td>
+        <td class="description level-2">Audit of FPT_RPL.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.11.5</td>
+        <td class="component-id">FPT_RPL.1</td>
+        <td class="description level-2">Replay detection</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.12</td>
+        <td class="component-id">FPT_SSP</td>
+        <td class="description level-1">State synchrony protocol </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.12.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.12.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.12.3</td>
+        <td class="component-id">FPT_SSP.1, FPT_SSP.2</td>
+        <td class="description level-2">Management of FPT_SSP.1, FPT_SSP.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.12.4</td>
+        <td class="component-id">FPT_SSP.1, FPT_SSP.2</td>
+        <td class="description level-2">Audit of FPT_SSP.1, FPT_SSP.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.12.5</td>
+        <td class="component-id">FPT_SSP.1</td>
+        <td class="description level-2">Simple trusted acknowledgement</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.12.6</td>
+        <td class="component-id">FPT_SSP.2</td>
+        <td class="description level-2">Mutual trusted acknowledgement</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13</td>
+        <td class="component-id">FPT_STM</td>
+        <td class="description level-1">Time stamps </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13.3</td>
+        <td class="component-id">FPT_STM.1</td>
+        <td class="description level-2">Management of FPT_STM.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13.4</td>
+        <td class="component-id">FPT_STM.2</td>
+        <td class="description level-2">Management of FPT_STM.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13.5</td>
+        <td class="component-id">FPT_STM.1</td>
+        <td class="description level-2">Audit of FPT_STM.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13.6</td>
+        <td class="component-id">FPT_STM.2</td>
+        <td class="description level-2">Audit of FPT_STM.2</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13.7</td>
+        <td class="component-id">FPT_STM.1</td>
+        <td class="description level-2">Reliable time stamps</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.13.8</td>
+        <td class="component-id">FPT_STM.2</td>
+        <td class="description level-2">Time source</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.14</td>
+        <td class="component-id">FPT_TDC</td>
+        <td class="description level-1">Inter-TSF TSF data consistency </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.14.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.14.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.14.3</td>
+        <td class="component-id">FPT_TDC.1</td>
+        <td class="description level-2">Management of FPT_TDC.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.14.4</td>
+        <td class="component-id">FPT_TDC.1</td>
+        <td class="description level-2">Audit of FPT_TDC.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.14.5</td>
+        <td class="component-id">FPT_TDC.1</td>
+        <td class="description level-2">Inter-TSF basic TSF data consistency</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.15</td>
+        <td class="component-id">FPT_TEE</td>
+        <td class="description level-1">Testing of external entities </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.15.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.15.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.15.3</td>
+        <td class="component-id">FPT_TEE.1</td>
+        <td class="description level-2">Management of FPT_TEE.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.15.4</td>
+        <td class="component-id">FPT_TEE.1</td>
+        <td class="description level-2">Audit of FPT_TEE.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.15.5</td>
+        <td class="component-id">FPT_TEE.1</td>
+        <td class="description level-2">Testing of external entities</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.16</td>
+        <td class="component-id">FPT_TRC</td>
+        <td class="description level-1">Internal TOE TSF data replication consistency </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.16.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.16.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.16.3</td>
+        <td class="component-id">FPT_TRC.1</td>
+        <td class="description level-2">Management of FPT_TRC.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.16.4</td>
+        <td class="component-id">FPT_TRC.1</td>
+        <td class="description level-2">Audit of FPT_TRC.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.16.5</td>
+        <td class="component-id">FPT_TRC.1</td>
+        <td class="description level-2">Internal TSF consistency</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.17</td>
+        <td class="component-id">FPT_TST</td>
+        <td class="description level-1">TSF self-test </td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.17.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.17.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.17.3</td>
+        <td class="component-id">FPT_TST.1</td>
+        <td class="description level-2">Management of FPT_TST.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.17.4</td>
+        <td class="component-id">FPT_TST.1</td>
+        <td class="description level-2">Audit of FPT_TST.1</td>
+    </tr>
+    <tr data-class="FPT">
+        <td class="section-id">15.17.5</td>
+        <td class="component-id">FPT_TST.1</td>
+        <td class="description level-2">TSF self-testing</td>
+    </tr>
+    <tr class="class-row" data-class="FRU">
+        <td class="section-id">16</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FRU: Resource utilization</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.2</td>
+        <td class="component-id">FRU_FLT</td>
+        <td class="description level-1">Fault tolerance </td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.2.3</td>
+        <td class="component-id">FRU_FLT.1, FRU_FLT.2</td>
+        <td class="description level-2">Management of FRU_FLT.1, FRU_FLT.2</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.2.4</td>
+        <td class="component-id">FRU_FLT.1</td>
+        <td class="description level-2">Audit of FRU_FLT.1</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.2.5</td>
+        <td class="component-id">FRU_FLT.2</td>
+        <td class="description level-2">Audit of FRU_FLT.2</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.2.6</td>
+        <td class="component-id">FRU_FLT.1</td>
+        <td class="description level-2">Degraded fault tolerance</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.2.7</td>
+        <td class="component-id">FRU_FLT.2</td>
+        <td class="description level-2">Limited fault tolerance</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.3</td>
+        <td class="component-id">FRU_PRS</td>
+        <td class="description level-1">Priority of service </td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.3.3</td>
+        <td class="component-id">FRU_PRS.1, FRU_PRS.2</td>
+        <td class="description level-2">Management of FRU_PRS.1, FRU_PRS.2</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.3.4</td>
+        <td class="component-id">FRU_PRS.1, FRU_PRS.2</td>
+        <td class="description level-2">Audit of FRU_PRS.1, FRU_PRS.2</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.3.5</td>
+        <td class="component-id">FRU_PRS.1</td>
+        <td class="description level-2">Limited priority of service</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.3.6</td>
+        <td class="component-id">FRU_PRS.2</td>
+        <td class="description level-2">Full priority of service</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.4</td>
+        <td class="component-id">FRU_RSA</td>
+        <td class="description level-1">Resource allocation </td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.4.3</td>
+        <td class="component-id">FRU_RSA.1</td>
+        <td class="description level-2">Management of FRU_RSA.1</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.4.4</td>
+        <td class="component-id">FRU_RSA.2</td>
+        <td class="description level-2">Management of FRU_RSA.2</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.4.5</td>
+        <td class="component-id">FRU_RSA.1, FRU_RSA.2</td>
+        <td class="description level-2">Audit of FRU_RSA.1, FRU_RSA.2</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.4.6</td>
+        <td class="component-id">FRU_RSA.1</td>
+        <td class="description level-2">Maximum quotas</td>
+    </tr>
+    <tr data-class="FRU">
+        <td class="section-id">16.4.7</td>
+        <td class="component-id">FRU_RSA.2</td>
+        <td class="description level-2">Minimum and maximum quotas</td>
+    </tr>
+    <tr class="class-row" data-class="FTA">
+        <td class="section-id">17</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FTA: TOE access</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.2</td>
+        <td class="component-id">FTA_LSA</td>
+        <td class="description level-1">Limitation on scope of selectable attributes </td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.2.3</td>
+        <td class="component-id">FTA_LSA.1</td>
+        <td class="description level-2">Management of FTA_LSA.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.2.4</td>
+        <td class="component-id">FTA_LSA.1</td>
+        <td class="description level-2">Audit of FTA_LSA.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.2.5</td>
+        <td class="component-id">FTA_LSA.1</td>
+        <td class="description level-2">Limitation on scope of selectable attributes</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.3</td>
+        <td class="component-id">FTA_MCS</td>
+        <td class="description level-1">Limitation on multiple concurrent sessions </td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.3.3</td>
+        <td class="component-id">FTA_MCS.1</td>
+        <td class="description level-2">Management of FTA_MCS.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.3.4</td>
+        <td class="component-id">FTA_MCS.2</td>
+        <td class="description level-2">Management of FTA_MCS.2</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.3.5</td>
+        <td class="component-id">FTA_MCS.1, FTA_MCS.2</td>
+        <td class="description level-2">Audit of FTA_MCS.1, FTA_MCS.2</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.3.6</td>
+        <td class="component-id">FTA_MCS.1</td>
+        <td class="description level-2">Basic limitation on multiple concurrent sessions</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.3.7</td>
+        <td class="component-id">FTA_MCS.2</td>
+        <td class="description level-2">Per user attribute limitation on multiple concurrent sessions</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4</td>
+        <td class="component-id">FTA_SSL</td>
+        <td class="description level-1">Session locking and termination </td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.3</td>
+        <td class="component-id">FTA_SSL.1</td>
+        <td class="description level-2">Management of FTA_SSL.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.4</td>
+        <td class="component-id">FTA_SSL.2</td>
+        <td class="description level-2">Management of FTA_SSL.2</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.5</td>
+        <td class="component-id">FTA_SSL.3</td>
+        <td class="description level-2">Management of FTA_SSL.3</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.6</td>
+        <td class="component-id">FTA_SSL.4</td>
+        <td class="description level-2">Management of FTA_SSL.4</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.7</td>
+        <td class="component-id">FTA_SSL.1, FTA_SSL.2</td>
+        <td class="description level-2">Audit of FTA_SSL.1, FTA_SSL.2</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.8</td>
+        <td class="component-id">FTA_SSL.3</td>
+        <td class="description level-2">Audit of FTA_SSL.3</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.9</td>
+        <td class="component-id">FTA_SSL.4</td>
+        <td class="description level-2">Audit of FTA_SSL.4</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.10</td>
+        <td class="component-id">FTA_SSL.1</td>
+        <td class="description level-2">TSF-initiated session locking</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.11</td>
+        <td class="component-id">FTA_SSL.2</td>
+        <td class="description level-2">User-initiated locking</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.12</td>
+        <td class="component-id">FTA_SSL.3</td>
+        <td class="description level-2">TSF-initiated termination</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.4.13</td>
+        <td class="component-id">FTA_SSL.4</td>
+        <td class="description level-2">User-initiated termination</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.5</td>
+        <td class="component-id">FTA_TAB</td>
+        <td class="description level-1">TOE access banners </td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.5.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.5.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.5.3</td>
+        <td class="component-id">FTA_TAB.1</td>
+        <td class="description level-2">Management of FTA_TAB.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.5.4</td>
+        <td class="component-id">FTA_TAB.1</td>
+        <td class="description level-2">Audit of FTA_TAB.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.5.5</td>
+        <td class="component-id">FTA_TAB.1</td>
+        <td class="description level-2">Default TOE access banners</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.6</td>
+        <td class="component-id">FTA_TAH</td>
+        <td class="description level-1">TOE access history </td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.6.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.6.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.6.3</td>
+        <td class="component-id">FTA_TAH.1</td>
+        <td class="description level-2">Management of FTA_TAH.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.6.4</td>
+        <td class="component-id">FTA_TAH.1</td>
+        <td class="description level-2">Audit of FTA_TAH.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.6.5</td>
+        <td class="component-id">FTA_TAH.1</td>
+        <td class="description level-2">TOE access history</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.7</td>
+        <td class="component-id">FTA_TSE</td>
+        <td class="description level-1">TOE session establishment </td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.7.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.7.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.7.3</td>
+        <td class="component-id">FTA_TSE.1</td>
+        <td class="description level-2">Management of FTA_TSE.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.7.4</td>
+        <td class="component-id">FTA_TSE.1</td>
+        <td class="description level-2">Audit of FTA_TSE.1</td>
+    </tr>
+    <tr data-class="FTA">
+        <td class="section-id">17.7.5</td>
+        <td class="component-id">FTA_TSE.1</td>
+        <td class="description level-2">TOE session establishment</td>
+    </tr>
+    <tr class="class-row" data-class="FTP">
+        <td class="section-id">18</td>
+        <td class="component-id"></td>
+        <td class="description level-8">Class FTP: Trusted path/channels</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.1</td>
+        <td class="component-id"></td>
+        <td class="description level-1">Class description</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.2</td>
+        <td class="component-id">FTP_ITC</td>
+        <td class="description level-1">Inter-TSF trusted channel </td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.2.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.2.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.2.3</td>
+        <td class="component-id">FTP_ITC.1</td>
+        <td class="description level-2">Management of FTP_ITC.1</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.2.4</td>
+        <td class="component-id">FTP_ITC.1</td>
+        <td class="description level-2">Audit of FTP_ITC.1</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.2.5</td>
+        <td class="component-id">FTP_ITC.1</td>
+        <td class="description level-2">Inter-TSF trusted channel</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3</td>
+        <td class="component-id">FTP_PRO</td>
+        <td class="description level-1">Trusted channel protocol </td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behavior</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.3</td>
+        <td class="component-id">FTP_PRO.1</td>
+        <td class="description level-2">Management of FTP_PRO.1</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.4</td>
+        <td class="component-id">FTP_PRO.2</td>
+        <td class="description level-2">Management of FTP_PRO.2</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.5</td>
+        <td class="component-id">FTP_PRO.3</td>
+        <td class="description level-2">Management of FTP_PRO.3</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.6</td>
+        <td class="component-id">FTP_PRO.1</td>
+        <td class="description level-2">Audit of FTP_PRO.1</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.7</td>
+        <td class="component-id">FTP_PRO.2</td>
+        <td class="description level-2">Audit of FTP_PRO.2</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.8</td>
+        <td class="component-id">FTP_PRO.3</td>
+        <td class="description level-2">Audit of FTP_PRO.3</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.9</td>
+        <td class="component-id">FTP_PRO.1</td>
+        <td class="description level-2">Trusted channel protocol</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.10</td>
+        <td class="component-id">FTP_PRO.2</td>
+        <td class="description level-2">Trusted channel establishment</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.3.11</td>
+        <td class="component-id">FTP_PRO.3</td>
+        <td class="description level-2">Trusted channel data protection</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.4</td>
+        <td class="component-id">FTP_TRP</td>
+        <td class="description level-1">Trusted path </td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.4.1</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Family behaviour</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.4.2</td>
+        <td class="component-id"></td>
+        <td class="description level-2">Components leveling and description</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.4.3</td>
+        <td class="component-id">FTP_TRP.1</td>
+        <td class="description level-2">Management of FTP_TRP.1</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.4.4</td>
+        <td class="component-id">FTP_TRP.1</td>
+        <td class="description level-2">Audit of FTP_TRP.1</td>
+    </tr>
+    <tr data-class="FTP">
+        <td class="section-id">18.4.5</td>
+        <td class="component-id">FTP_TRP.1</td>
+        <td class="description level-2">Trusted path</td>
+    </tr>
+                </tbody>
+            </table>
+            <div id="noResults" class="no-results" style="display: none;">
+                ❌ No se encontraron resultados para tu búsqueda.
+            </div>
+        </div>
+
+        <div class="stats">
+            <span id="totalRows">Cargando datos...</span>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const classFilter = document.getElementById('classFilter');
+        const tableBody = document.getElementById('tableBody');
+        const noResults = document.getElementById('noResults');
+        const totalRowsSpan = document.getElementById('totalRows');
+
+        function updateStats() {
+            const visibleRows = Array.from(tableBody.querySelectorAll('tr')).filter(row => {
+                return row.style.display !== 'none';
+            }).length;
+            const totalRows = tableBody.querySelectorAll('tr').length;
+            totalRowsSpan.textContent = `Mostrando ${visibleRows} de ${totalRows} elementos`;
+        }
+
+        function filterTable() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedClass = classFilter.value;
+            const rows = tableBody.querySelectorAll('tr');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const sectionId = row.querySelector('.section-id')?.textContent.toLowerCase() || '';
+                const componentId = row.querySelector('.component-id')?.textContent.toLowerCase() || '';
+                const description = row.querySelector('.description')?.textContent.toLowerCase() || '';
+                const rowClass = row.dataset.class || '';
+
+                const matchesSearch = sectionId.includes(searchTerm) || 
+                                    componentId.includes(searchTerm) || 
+                                    description.includes(searchTerm);
+                const matchesClass = !selectedClass || rowClass === selectedClass;
+
+                if (matchesSearch && matchesClass) {
+                    row.style.display = '';
+                    visibleCount++;
+                    highlightText(row, searchTerm);
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            document.querySelector('.table-container table').style.display = visibleCount === 0 ? 'none' : 'table';
+            updateStats();
+        }
+
+        function highlightText(row, term) {
+            const descriptionCell = row.querySelector('.description');
+            if (!descriptionCell) return;
+            
+            // Guardar el texto original si no existe
+            if (!descriptionCell.dataset.originalText) {
+                descriptionCell.dataset.originalText = descriptionCell.textContent;
+            }
+            
+            if (!term) {
+                descriptionCell.textContent = descriptionCell.dataset.originalText;
+                return;
+            }
+
+            const text = descriptionCell.dataset.originalText;
+            const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            descriptionCell.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        searchInput.addEventListener('input', filterTable);
+        classFilter.addEventListener('change', filterTable);
+
+        // Initial stats update
+        updateStats();
+        
+        // Smooth scroll behavior
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', function() {
+                this.style.backgroundColor = '#fff3cd';
+                setTimeout(() => {
+                    this.style.backgroundColor = '';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
